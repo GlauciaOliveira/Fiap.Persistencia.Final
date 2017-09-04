@@ -1,0 +1,42 @@
+@model Fiap.Persistencia.Final.Core.Models.Versao
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h2>Delete</h2>
+
+@ViewBag.message
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Versao</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <input type="hidden" asp-for="IdVersao" />
+        <dt>
+            @Html.DisplayNameFor(model => model.Descricao)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Descricao)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.DataCriacao)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DataCriacao)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.DataAtualizacao)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DataAtualizacao)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            <a asp-action="Index">Back to List</a>
+        </div>
+    </form>
+</div>
