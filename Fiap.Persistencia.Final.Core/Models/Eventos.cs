@@ -17,5 +17,7 @@ namespace Fiap.Persistencia.Final.Core.Models
         public string Localizacao { get; set; }
 
         public string Observacao { get; set; }
+
+        public Versao Versao { get; set; }
     }
 }

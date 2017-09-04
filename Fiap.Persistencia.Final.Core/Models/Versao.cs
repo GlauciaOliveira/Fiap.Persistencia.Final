@@ -16,5 +16,7 @@ namespace Fiap.Persistencia.Final.Core.Models
         public DateTime DataCriacao { get; set; }
 
         public string DataAtualizacao { get; set; }
+
+        public ICollection<Eventos> Eventos { get; set; }
     }
 }
