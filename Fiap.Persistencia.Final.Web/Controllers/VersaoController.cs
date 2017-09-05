@@ -19,7 +19,7 @@ namespace Fiap.Persistencia.Final.Web.Controllers
         public ActionResult Index()
         {
             var result = contextVersion.Listar();
-            //var result = db.Versao.ToList();
+
             return View(result);
         }
 
@@ -43,9 +43,6 @@ namespace Fiap.Persistencia.Final.Web.Controllers
             try
             {
                 contextVersion.Incluir(entity);
-                // TODO: Add insert logic here
-                //db.Versao.Add(entity);
-                //db.SaveChanges();
 
                 return RedirectToAction("Index");
             }
@@ -70,9 +67,7 @@ namespace Fiap.Persistencia.Final.Web.Controllers
             try
             {
                 contextVersion.Atualizar(entity);
-                // TODO: Add update logic here
-                //db.Entry(entity).State = EntityState.Modified;
-                //db.SaveChanges();
+
                 return RedirectToAction("Index");
             }
             catch
@@ -99,8 +94,6 @@ namespace Fiap.Persistencia.Final.Web.Controllers
                 // TODO: Add delete logic here
 
                 contextVersion.Remover(result);
-                //db.Entry(result).State = EntityState.Deleted;
-                //db.SaveChanges();
 
                 return RedirectToAction("Index");
             }

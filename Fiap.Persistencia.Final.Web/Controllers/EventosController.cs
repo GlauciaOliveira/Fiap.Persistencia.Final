@@ -9,14 +9,14 @@ namespace Fiap.Persistencia.Final.Web.Controllers
 {
     public class EventosController : Controller
     {
-        //static Context db = new Context();
         Core.Repository.Eventos context = new Core.Repository.Eventos(new Context());
         Core.Repository.Versao contextVersion = new Core.Repository.Versao(new Context());
+
         // GET: Eventos
         public ActionResult Index()
         {
             var result = context.Listar();
-            //var result = db.Eventos.Include("Versao").ToList();
+
             return View(result);
         }
 
@@ -53,8 +53,7 @@ namespace Fiap.Persistencia.Final.Web.Controllers
                 });
 
                 var entidade = Mapper.Map<Eventos>(entity);
-                context.Incluir(entidade);
-                
+                context.Incluir(entidade);                
 
                 return RedirectToAction("Index");
             }
@@ -78,15 +77,6 @@ namespace Fiap.Persistencia.Final.Web.Controllers
 
             var entidade = Mapper.Map<EventosViewModel>(evento);
             entidade.ListaVersoes = listaVersao;
-            //EventosViewModel model = new EventosViewModel()
-            //{
-            //    ListaVersoes = listaVersao,
-            //    NomeEvento = evento.NomeEvento,
-            //    IdEvento = evento.IdEvento,
-            //    DataEvento = evento.DataEvento,
-            //    Localizacao = evento.Localizacao,
-            //    Observacao = evento.Observacao
-            //};
 
             return View(entidade);
         }
@@ -98,8 +88,6 @@ namespace Fiap.Persistencia.Final.Web.Controllers
         {
             try
             {
-                //Mapper.Initialize(cfg => cfg.CreateMap<EventosViewModel, Eventos>());
-
                 Mapper.Initialize(cfg =>
                 {
                     cfg.CreateMap<EventosViewModel, Eventos>();
@@ -120,9 +108,9 @@ namespace Fiap.Persistencia.Final.Web.Controllers
         // GET: Eventos/Delete/5
         public ActionResult Delete(int id)
         {
-            //var result = db.Eventos.Find(id);
-            //return View(result);
-            return View();
+            var result = context.Buscar(id);
+
+            return View(result);
         }
 
         // POST: Eventos/Delete/5
@@ -133,7 +121,6 @@ namespace Fiap.Persistencia.Final.Web.Controllers
             var result = context.Buscar(id);
             try
             {
-                // TODO: Add delete logic here
 
                 context.Remover(result);
 

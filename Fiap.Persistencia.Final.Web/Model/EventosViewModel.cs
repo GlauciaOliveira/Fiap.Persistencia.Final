@@ -8,7 +8,6 @@ namespace Fiap.Persistencia.Final.Web.Model
 {
     public class EventosViewModel
     {
-        //public Eventos Evento { get; set; }
         public int IdEvento { get; set; }
 
         public string NomeEvento { get; set; }
