@@ -8,8 +8,8 @@ using Fiap.Persistencia.Final.Core.Data;
 namespace Fiap.Persistencia.Final.Core.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20170904143918_First")]
-    partial class First
+    [Migration("20170905211119_Primeira")]
+    partial class Primeira
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -24,17 +24,17 @@ namespace Fiap.Persistencia.Final.Core.Migrations
 
                     b.Property<DateTime>("DataEvento");
 
+                    b.Property<int>("IdVersao");
+
                     b.Property<string>("Localizacao");
 
                     b.Property<string>("NomeEvento");
 
                     b.Property<string>("Observacao");
 
-                    b.Property<int?>("VersaoIdVersao");
-
                     b.HasKey("IdEvento");
 
-                    b.HasIndex("VersaoIdVersao");
+                    b.HasIndex("IdVersao");
 
                     b.ToTable("TBEventos");
                 });
@@ -57,9 +57,10 @@ namespace Fiap.Persistencia.Final.Core.Migrations
 
             modelBuilder.Entity("Fiap.Persistencia.Final.Core.Models.Eventos", b =>
                 {
-                    b.HasOne("Fiap.Persistencia.Final.Core.Models.Versao", "Versao")
+                    b.HasOne("Fiap.Persistencia.Final.Core.Models.Versao")
                         .WithMany("Eventos")
-                        .HasForeignKey("VersaoIdVersao");
+                        .HasForeignKey("IdVersao")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
         }
     }

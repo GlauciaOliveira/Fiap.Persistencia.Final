@@ -4,6 +4,7 @@ using System.Text;
 using Fiap.Persistencia.Final.Core.Models;
 using Fiap.Persistencia.Final.Core.Data;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace Fiap.Persistencia.Final.Core.Repository
 {
@@ -24,22 +25,23 @@ namespace Fiap.Persistencia.Final.Core.Repository
 
         public void Remover(Models.Versao entity)
         {
-            db.Versao.Remove(entity);
+            db.Entry(entity).State = EntityState.Deleted;
             db.SaveChanges();
         }
 
         public void Atualizar(Models.Versao entity)
         {
+            db.Entry(entity).State = EntityState.Modified;
             db.SaveChanges();
         }
 
-        ICollection<Models.Versao> IRepository<Models.Versao>.Listar()
+        public ICollection<Models.Versao> Listar()
         {
             var result = db.Versao.ToList();
             return result;
         }
 
-        Models.Versao IRepository<Models.Versao>.Buscar(int id)
+        public Models.Versao Buscar(int id)
         {
             var result = db.Versao.Find(id);
             return result;

@@ -1,22 +1,22 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Fiap.Persistencia.Final.Core.Data;
-using Microsoft.EntityFrameworkCore;
 using Fiap.Persistencia.Final.Core.Models;
+using Fiap.Persistencia.Final.Web.Model;
+using AutoMapper;
+using System;
 
 namespace Fiap.Persistencia.Final.Web.Controllers
 {
     public class EventosController : Controller
     {
-        Context db = new Context();
+        //static Context db = new Context();
+        Core.Repository.Eventos context = new Core.Repository.Eventos(new Context());
+        Core.Repository.Versao contextVersion = new Core.Repository.Versao(new Context());
         // GET: Eventos
         public ActionResult Index()
         {
-            var result = db.Eventos.Include("Versao").ToList();
+            var result = context.Listar();
+            //var result = db.Eventos.Include("Versao").ToList();
             return View(result);
         }
 
@@ -29,7 +29,14 @@ namespace Fiap.Persistencia.Final.Web.Controllers
         // GET: Eventos/Create
         public ActionResult Create()
         {
-            return View();
+            var listaVersao = contextVersion.Listar();
+            
+            EventosViewModel model = new EventosViewModel()
+            {
+                ListaVersoes = listaVersao
+            };
+
+            return View(model);
         }
 
         // POST: Eventos/Create
@@ -39,9 +46,15 @@ namespace Fiap.Persistencia.Final.Web.Controllers
         {
             try
             {
-                // TODO: Add insert logic here
-                db.Eventos.Add(entity);
-                db.SaveChanges();
+                Mapper.Initialize(cfg =>
+                {
+                    cfg.CreateMap<EventosViewModel, Eventos>();
+                    cfg.CreateMap<Eventos, EventosViewModel>();
+                });
+
+                var entidade = Mapper.Map<Eventos>(entity);
+                context.Incluir(entidade);
+                
 
                 return RedirectToAction("Index");
             }
@@ -54,27 +67,51 @@ namespace Fiap.Persistencia.Final.Web.Controllers
         // GET: Eventos/Edit/5
         public ActionResult Edit(int id)
         {
-            var versoes = db.Versao.ToList();
-            ViewBag.ListaVersao = versoes;
+            var listaVersao = contextVersion.Listar();
+            var evento = context.Buscar(id);
+            
+            Mapper.Initialize(cfg =>
+            {
+                cfg.CreateMap<EventosViewModel, Eventos>();
+                cfg.CreateMap<Eventos, EventosViewModel>();
+            });
 
-            var result = db.Eventos.Where(x => x.IdEvento == id).Include("Versao").FirstOrDefault();
-            return View(result);
+            var entidade = Mapper.Map<EventosViewModel>(evento);
+            entidade.ListaVersoes = listaVersao;
+            //EventosViewModel model = new EventosViewModel()
+            //{
+            //    ListaVersoes = listaVersao,
+            //    NomeEvento = evento.NomeEvento,
+            //    IdEvento = evento.IdEvento,
+            //    DataEvento = evento.DataEvento,
+            //    Localizacao = evento.Localizacao,
+            //    Observacao = evento.Observacao
+            //};
+
+            return View(entidade);
         }
 
         // POST: Eventos/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, Eventos entity)
+        public ActionResult Edit(EventosViewModel entity)
         {
             try
             {
-                var teste = ViewBag.ListaVersao;
-                // TODO: Add update logic here
-                db.Entry(entity).State = EntityState.Modified;
-                db.SaveChanges();
+                //Mapper.Initialize(cfg => cfg.CreateMap<EventosViewModel, Eventos>());
+
+                Mapper.Initialize(cfg =>
+                {
+                    cfg.CreateMap<EventosViewModel, Eventos>();
+                    cfg.CreateMap<Eventos, EventosViewModel>();
+                });
+
+                var entidade = Mapper.Map<Eventos>(entity);
+                context.Atualizar(entidade);
+
                 return RedirectToAction("Index");
             }
-            catch
+            catch (Exception ex)
             {
                 return View();
             }
@@ -83,8 +120,9 @@ namespace Fiap.Persistencia.Final.Web.Controllers
         // GET: Eventos/Delete/5
         public ActionResult Delete(int id)
         {
-            var result = db.Eventos.Find(id);
-            return View(result);
+            //var result = db.Eventos.Find(id);
+            //return View(result);
+            return View();
         }
 
         // POST: Eventos/Delete/5
@@ -92,13 +130,12 @@ namespace Fiap.Persistencia.Final.Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, Eventos entity)
         {
-            var result = db.Eventos.Find(id);
+            var result = context.Buscar(id);
             try
             {
                 // TODO: Add delete logic here
 
-                db.Entry(result).State = EntityState.Deleted;
-                db.SaveChanges();
+                context.Remover(result);
 
                 return RedirectToAction("Index");
             }
@@ -107,6 +144,7 @@ namespace Fiap.Persistencia.Final.Web.Controllers
                 ViewBag.message = "Há eventos para esta versão e a mesma não pode ser excluída";
                 return View(result);
             }
+            return View();
         }
     }
 }

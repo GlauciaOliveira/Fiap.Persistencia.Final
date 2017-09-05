@@ -17,7 +17,7 @@ namespace Fiap.Persistencia.Final.Core.Data
 
         public DbSet<Versao> Versao { get; set; }
         public DbSet<Eventos> Eventos { get; set; }
-        
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Versao>().ToTable("TBVersao");

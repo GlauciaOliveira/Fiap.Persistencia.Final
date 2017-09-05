@@ -12,11 +12,14 @@ namespace Fiap.Persistencia.Final.Web.Controllers
 {
     public class VersaoController : Controller
     {
-        Context db = new Context();
+        //Context db = new Context();
+        Core.Repository.Versao contextVersion = new Core.Repository.Versao(new Context());
+
         // GET: Versao
         public ActionResult Index()
         {
-            var result = db.Versao.ToList();
+            var result = contextVersion.Listar();
+            //var result = db.Versao.ToList();
             return View(result);
         }
 
@@ -39,9 +42,10 @@ namespace Fiap.Persistencia.Final.Web.Controllers
         {
             try
             {
+                contextVersion.Incluir(entity);
                 // TODO: Add insert logic here
-                db.Versao.Add(entity);
-                db.SaveChanges();
+                //db.Versao.Add(entity);
+                //db.SaveChanges();
 
                 return RedirectToAction("Index");
             }
@@ -54,7 +58,7 @@ namespace Fiap.Persistencia.Final.Web.Controllers
         // GET: Versao/Edit/5
         public ActionResult Edit(int id)
         {
-            var result = db.Versao.Find(id);
+            var result = contextVersion.Buscar(id);
             return View(result);
         }
 
@@ -65,9 +69,10 @@ namespace Fiap.Persistencia.Final.Web.Controllers
         {
             try
             {
+                contextVersion.Atualizar(entity);
                 // TODO: Add update logic here
-                db.Entry(entity).State = EntityState.Modified;
-                db.SaveChanges();
+                //db.Entry(entity).State = EntityState.Modified;
+                //db.SaveChanges();
                 return RedirectToAction("Index");
             }
             catch
@@ -79,7 +84,7 @@ namespace Fiap.Persistencia.Final.Web.Controllers
         // GET: Versao/Delete/5
         public ActionResult Delete(int id)
         {
-            var result = db.Versao.Find(id);
+            var result = contextVersion.Buscar(id);
             return View(result);
         }
 
@@ -88,13 +93,14 @@ namespace Fiap.Persistencia.Final.Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, Versao entity)
         {
-            var result = db.Versao.Find(id);
+            var result = contextVersion.Buscar(id);
             try
             {
                 // TODO: Add delete logic here
-                
-                db.Entry(result).State = EntityState.Deleted;
-                db.SaveChanges();
+
+                contextVersion.Remover(result);
+                //db.Entry(result).State = EntityState.Deleted;
+                //db.SaveChanges();
 
                 return RedirectToAction("Index");
             }

@@ -1,13 +1,14 @@
-﻿using System;
+﻿using Fiap.Persistencia.Final.Core.Models;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace Fiap.Persistencia.Final.Core.Models
+namespace Fiap.Persistencia.Final.Web.Model
 {
-    public class Eventos
+    public class EventosViewModel
     {
-        [Key]
+        //public Eventos Evento { get; set; }
         public int IdEvento { get; set; }
 
         public string NomeEvento { get; set; }
@@ -20,6 +21,6 @@ namespace Fiap.Persistencia.Final.Core.Models
 
         public int IdVersao { get; set; }
 
-        //public Versao Versao { get; set; }
+        public ICollection<Versao>ListaVersoes { get; set; }
     }
 }

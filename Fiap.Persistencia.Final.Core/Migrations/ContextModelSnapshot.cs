@@ -23,17 +23,17 @@ namespace Fiap.Persistencia.Final.Core.Migrations
 
                     b.Property<DateTime>("DataEvento");
 
+                    b.Property<int>("IdVersao");
+
                     b.Property<string>("Localizacao");
 
                     b.Property<string>("NomeEvento");
 
                     b.Property<string>("Observacao");
 
-                    b.Property<int?>("VersaoIdVersao");
-
                     b.HasKey("IdEvento");
 
-                    b.HasIndex("VersaoIdVersao");
+                    b.HasIndex("IdVersao");
 
                     b.ToTable("TBEventos");
                 });
@@ -56,9 +56,10 @@ namespace Fiap.Persistencia.Final.Core.Migrations
 
             modelBuilder.Entity("Fiap.Persistencia.Final.Core.Models.Eventos", b =>
                 {
-                    b.HasOne("Fiap.Persistencia.Final.Core.Models.Versao", "Versao")
+                    b.HasOne("Fiap.Persistencia.Final.Core.Models.Versao")
                         .WithMany("Eventos")
-                        .HasForeignKey("VersaoIdVersao");
+                        .HasForeignKey("IdVersao")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
         }
     }

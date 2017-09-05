@@ -1,4 +1,4 @@
-@model Fiap.Persistencia.Final.Core.Models.Eventos
+@model Fiap.Persistencia.Final.Web.Model.EventosViewModel
 
 @{
     ViewData["Title"] = "Edit";
@@ -8,30 +8,14 @@
 
 <form asp-action="Edit">
     <div class="form-horizontal">
-        <h4>Eventos</h4>
+        <h4>EventosViewModel</h4>
         <hr />
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <input type="hidden" asp-for="IdEvento" />
         <div class="form-group">
             <label class="col-md-2 control-label">Versão</label>
             <div class="col-md-10">
-                @*@Html.DropDownListFor(m => m.Versao, new SelectList(ViewBag.ListaVersao), "--Select--")*@
-                <select asp-for="@Model.Versao" class="form-control" name="size">
-                    <option value="">Selecione a versão</option>
-                    @foreach (var item in ViewBag.ListaVersao)
-                    {
-                        if (item.IdVersao == Model.Versao.IdVersao)
-                        {
-                            <option selected value="@item.IdVersao">@item.Descricao</option>
-                        }
-                        else
-                        {
-                            <option value="@item.IdVersao">@item.Descricao</option>
-
-                        }
-                    }
-
-                </select>
+                @Html.DropDownListFor(m => m.IdVersao, new SelectList(Model.ListaVersoes, "IdVersao", "Descricao", Model.IdVersao), new { @class = "form-control" })
             </div>
         </div>
         <div class="form-group">
@@ -44,7 +28,7 @@
         <div class="form-group">
             <label asp-for="DataEvento" class="col-md-2 control-label"></label>
             <div class="col-md-10">
-                <input asp-for="DataEvento" class="form-control" />
+                <input type="date" asp-for="DataEvento" class="form-control" />
                 <span asp-validation-for="DataEvento" class="text-danger"></span>
             </div>
         </div>
@@ -62,6 +46,7 @@
                 <span asp-validation-for="Observacao" class="text-danger"></span>
             </div>
         </div>
+        <input type="hidden" asp-for="IdVersao" />
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Save" class="btn btn-default" />
@@ -73,6 +58,8 @@
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
+
+
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

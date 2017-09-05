@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace Fiap.Persistencia.Final.Core.Migrations
 {
-    public partial class First : Migration
+    public partial class Primeira : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -31,26 +31,26 @@ namespace Fiap.Persistencia.Final.Core.Migrations
                     IdEvento = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     DataEvento = table.Column<DateTime>(nullable: false),
+                    IdVersao = table.Column<int>(nullable: false),
                     Localizacao = table.Column<string>(nullable: true),
                     NomeEvento = table.Column<string>(nullable: true),
-                    Observacao = table.Column<string>(nullable: true),
-                    VersaoIdVersao = table.Column<int>(nullable: true)
+                    Observacao = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_TBEventos", x => x.IdEvento);
                     table.ForeignKey(
-                        name: "FK_TBEventos_TBVersao_VersaoIdVersao",
-                        column: x => x.VersaoIdVersao,
+                        name: "FK_TBEventos_TBVersao_IdVersao",
+                        column: x => x.IdVersao,
                         principalTable: "TBVersao",
                         principalColumn: "IdVersao",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_TBEventos_VersaoIdVersao",
+                name: "IX_TBEventos_IdVersao",
                 table: "TBEventos",
-                column: "VersaoIdVersao");
+                column: "IdVersao");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
