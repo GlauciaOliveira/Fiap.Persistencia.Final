@@ -5,7 +5,9 @@ VisualStudioVersion = 15.0.26430.16
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fiap.Persistencia.Final.Core", "Fiap.Persistencia.Final.Core\Fiap.Persistencia.Final.Core.csproj", "{A5930786-5ACA-490F-9129-377CE9B78C14}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fiap.Persistencia.Final.Web", "Fiap.Persistencia.Final.Web\Fiap.Persistencia.Final.Web.csproj", "{961C01EC-3CF2-4350-9C91-ACCAAB0E459B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fiap.Persistencia.Final.Web", "Fiap.Persistencia.Final.Web\Fiap.Persistencia.Final.Web.csproj", "{961C01EC-3CF2-4350-9C91-ACCAAB0E459B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fiap.Persistencia.Final.Api", "Fiap.Persistencia.Final.Api\Fiap.Persistencia.Final.Api.csproj", "{3E05D465-CA02-425C-A72B-A137C2FD9DC6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{961C01EC-3CF2-4350-9C91-ACCAAB0E459B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{961C01EC-3CF2-4350-9C91-ACCAAB0E459B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{961C01EC-3CF2-4350-9C91-ACCAAB0E459B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3E05D465-CA02-425C-A72B-A137C2FD9DC6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E05D465-CA02-425C-A72B-A137C2FD9DC6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E05D465-CA02-425C-A72B-A137C2FD9DC6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E05D465-CA02-425C-A72B-A137C2FD9DC6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
